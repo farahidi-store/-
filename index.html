@@ -125,5 +125,59 @@ footer{background:#f3e1dc;text-align:center;padding:25px}
 <p>أضيفي رقم واتساب المتجر حتى يستقبل الزبائن طلباتهم.</p>
 </section>
 <footer>متجر الفراهيدي للقرطاسية والهدايا 🌸</footer>
-</body>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://afaobrakfhbkdriysgml.supabase.co/rest/v1/";
+const SUPABASE_KEY = "sb_publishable_tOQJ6TyuGukSMUvVKQxF6Q_pMgcKdxJ";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+document.getElementById("orderForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const button = this.querySelector('button[type="submit"]');
+  const message = document.getElementById("orderMessage");
+
+  button.disabled = true;
+  message.textContent = "جارٍ إرسال طلبك...";
+
+  const customerName = document.getElementById("customer_name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const product = document.getElementById("product").value;
+  const quantity = Number(document.getElementById("quantity").value);
+
+  if (!customerName || !phone || !address || !product ||
+      !Number.isInteger(quantity) || quantity < 1) {
+    message.textContent = "يرجى التأكد من ملء جميع الحقول بصورة صحيحة.";
+    button.disabled = false;
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("orders")
+    .insert({
+      customer_name: customerName,
+      phone: phone,
+      address: address,
+      notes: `المنتج: ${product} | الكمية: ${quantity}`,
+      total: 0,
+      status: "جديد"
+    });
+
+  if (error) {
+    console.error("Order submission failed:", error);
+    message.textContent = "تعذر إرسال الطلب. يرجى المحاولة لاحقاً.";
+  } else {
+    message.textContent = "تم إرسال طلبك بنجاح ❤️";
+    this.reset();
+  }
+
+  button.disabled = false;
+});
+</script></body>
 </html>
