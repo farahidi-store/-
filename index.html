@@ -68,6 +68,56 @@ footer{background:#f3e1dc;text-align:center;padding:25px}
     <p>السعر: يحدد عند الطلب</p>
   </div>
 </div>
+  <h2>🛒 اطلب من متجرنا</h2>
+
+<form id="orderForm">
+
+  <label for="customer_name">الاسم الكامل</label>
+  <input
+    type="text"
+    id="customer_name"
+    placeholder="اكتب اسمك الكامل"
+    required
+  >
+
+  <label for="phone">رقم الهاتف</label>
+  <input
+    type="tel"
+    id="phone"
+    placeholder="07xxxxxxxxx"
+    required
+  >
+
+  <label for="address">عنوان التوصيل</label>
+  <textarea
+    id="address"
+    placeholder="المحافظة والمنطقة وأقرب نقطة دالة"
+    required
+  ></textarea>
+
+  <label for="product">اختار المنتج</label>
+  <select id="product" required>
+    <option value="">اختار المنتج</option>
+    <option value="قرطاسية مدرسية">قرطاسية مدرسية</option>
+    <option value="هدايا مميزة">هدايا مميزة</option>
+    <option value="هدايا وردية">هدايا وردية</option>
+    <option value="تغليف الهدايا">تغليف الهدايا</option>
+  </select>
+
+  <label for="quantity">الكمية</label>
+  <input
+    type="number"
+    id="quantity"
+    min="1"
+    value="1"
+    required
+  >
+
+  <button type="submit">إرسال الطلب 🛍️</button>
+
+  <p id="orderMessage" role="status"></p>
+
+</form>
 </section>
 <section id="contact">
 <h2>💌 للطلب والاستفسار</h2>
